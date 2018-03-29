@@ -17,6 +17,56 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+let cities
+
+async function fetchCities() {
+  let response = await fetch(endpoint)
+  let json = await response.json()
+  return json
+}
+
+function searchCitites(wordToSearch, cities) {
+  let regex = new RegExp(wordToSearch, 'gi')
+  return cities.filter(place => place.city.match(regex) ||
+    place.state.match(regex))
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function highlight(word, partToHighlight) {
+  let regexp = new RegExp(partToHighlight, 'gi')
+  return word.replace(regexp, `<span class="hl">${partToHighlight}</span>`)
+}
+
+function displaySuggestions() {
+  let foundCities = searchCitites(this.value, cities)
+  let html = foundCities.map(place => {
+    let highlightedCity = highlight(place.city, this.value)
+    let highlightedState = highlight(place.state, this.value)
+
+    return `
+    <li>
+      <span class="name">${highlightedCity}, ${highlightedState}</span>
+      <span class="population">${numberWithCommas(place.population)}</span>
+    </li>`
+  }).join("")
+  suggestionsElement.innerHTML = html
+}
+
+async function main() {
+  cities = await fetchCities()
+}
+
+main()
+
+let searchInput = document.querySelector(".search")
+searchInput.addEventListener("change", displaySuggestions)
+searchInput.addEventListener("keyup", displaySuggestions)
+
+let suggestionsElement = document.querySelector(".suggestions")
+
 </script>
   </body>
 </html>
