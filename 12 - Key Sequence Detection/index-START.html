@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+  const KEYPHRASE = "wesbos"
+  const keypresses = []
+
+  window.addEventListener("keyup", (e) => {
+    console.log(e.key)
+    keypresses.push(e.key)
+    if (keypresses.length > KEYPHRASE.length)
+      keypresses.shift()
+    console.log(keypresses)
+
+    if (keypresses.join("") === KEYPHRASE)
+      cornify_add()
+  })
 </script>
 </body>
 </html>
