@@ -8,6 +8,11 @@
 
   <script>
     // start with strings, numbers and booleans
+let str = "foo"
+let str2 = str
+console.log(str, str2)
+str = "bar"
+console.log(str, str2)
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
@@ -43,6 +48,9 @@
     };
 
     // and think we make a copy:
+const person2 = {...person}
+person2.age = 99
+console.log(person.age, person2.age)
 
     // how do we take a copy instead?
 
