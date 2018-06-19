@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"
+    ></script>
 </head>
 <body>
 
@@ -44,8 +47,21 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  class Band {
+    static get articleRegex() { return /^(A|An|The) / }
 
+    constructor(name) {
+      this.name = name
+      this.sortName = name.replace(Band.articleRegex, '')
+    }
+  }
+
+const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil',
+'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State',
+'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive',
+'Anywhere But Here', 'An Old Dog'].map((band) => new Band(band))
+
+console.table(_.sortBy(bands, 'sortName'))
 
 </script>
 
