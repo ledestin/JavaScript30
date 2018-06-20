@@ -182,6 +182,18 @@
     </li>
   </ul>
 <script>
+  const videos = Array.from(document.querySelectorAll('.videos > li'))
+  const videoTimes = videos.map((video) => {
+    return video.dataset.time
+  })
+
+  const totalTime = videoTimes.reduce((sum, time) => {
+    const [minutes, seconds] = time.split(':')
+    sum += parseInt(minutes) * 60
+    sum += parseInt(seconds)
+    return sum
+  }, 0)
+  console.log(totalTime)
 </script>
 </body>
 </html>
